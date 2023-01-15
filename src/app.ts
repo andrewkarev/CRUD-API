@@ -12,7 +12,7 @@ export class App {
   }
 
   private async getUsers(res: http.ServerResponse) {
-    const users = this.db.getUsers();
+    const users = await this.db.getUsers();
 
     sendResponse(res, responseStatusCodes.OK, users);
   }
@@ -21,7 +21,7 @@ export class App {
     const isValidId = checkIfValidUUID(userId);
 
     if (isValidId) {
-      const user = this.db.getUser(userId);
+      const user = await this.db.getUser(userId);
 
       if (user) {
         sendResponse(res, responseStatusCodes.OK, user);
@@ -44,9 +44,9 @@ export class App {
       data += dataChunk;
     });
 
-    req.on('end', () => {
+    req.on('end', async () => {
       const body = JSON.parse(data);
-      const updatedUser = this.db.updateUser(userId, body);
+      const updatedUser = await this.db.updateUser(userId, body);
 
       if (updatedUser) {
         sendResponse(res, responseStatusCodes.OK, updatedUser);
@@ -62,9 +62,9 @@ export class App {
     const userId = req.url ? parseURL(req.url) : null;
 
     if (userId) {
-      this.getUser(userId, res);
+      await this.getUser(userId, res);
     } else {
-      this.getUsers(res);
+      await this.getUsers(res);
     }
   }
 
@@ -75,12 +75,12 @@ export class App {
       data += dataChunk;
     });
 
-    req.on('end', () => {
+    req.on('end', async () => {
       const body = JSON.parse(data);
       const isValid = isReqDataValid(body);
 
       if (isValid) {
-        const newUser = this.db.addUser(body);
+        const newUser = await this.db.addUser(body);
 
         sendResponse(res, responseStatusCodes.CREATED, newUser);
       } else {
@@ -98,7 +98,7 @@ export class App {
       const isValidId = checkIfValidUUID(userId);
 
       if (isValidId) {
-        this.updateUser(req, res, userId);
+        await this.updateUser(req, res, userId);
       } else {
         sendResponse(res, responseStatusCodes.BAD_REQUEST, {
           error: 'Provided id is not valid uuid id',
@@ -116,7 +116,7 @@ export class App {
       const isValidId = checkIfValidUUID(userId);
 
       if (isValidId) {
-        const deletedUser = this.db.removeUser(userId);
+        const deletedUser = await this.db.removeUser(userId);
 
         if (deletedUser) {
           sendResponse(res, responseStatusCodes.NO_CONTENT, deletedUser);
