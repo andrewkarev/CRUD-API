@@ -2,13 +2,15 @@ import cluster from 'cluster';
 import * as dotenv from 'dotenv';
 import { cpus } from 'os';
 import { pid } from 'process';
+import { setUpDB } from './utils/setUpDB';
 import { PORT } from './common/constants';
 import { server } from './server';
-import { updateDB } from './utils/updateDB';
 
 dotenv.config();
 
 try {
+  setUpDB.init();
+
   if (cluster.isPrimary) {
     const cpusQuantity = cpus().length;
     console.log(`Master ${pid} is running`);
@@ -27,7 +29,7 @@ try {
   }
 
   process.on('SIGINT', async () => {
-    await updateDB([]);
+    setUpDB.close();
     process.exit();
   });
 } catch (error) {

@@ -1,8 +1,8 @@
-import { IUser } from 'interfaces/IUser';
 import fs from 'node:fs/promises';
-import { join, dirname } from 'node:path';
+import { IUser } from 'interfaces/IUser';
+import { getDBPath } from './getDBPath';
 
 export const updateDB = async (data: IUser[]) => {
-  const pathToDB = join(dirname(__dirname), 'data.json');
+  const pathToDB = getDBPath();
   await fs.writeFile(pathToDB, JSON.stringify(data));
 };

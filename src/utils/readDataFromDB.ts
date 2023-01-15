@@ -1,9 +1,9 @@
-import { IUser } from 'interfaces/IUser';
 import fs from 'node:fs/promises';
-import { join, dirname } from 'node:path';
+import { IUser } from 'interfaces/IUser';
+import { getDBPath } from './getDBPath';
 
 export const readDataFromDB = async () => {
-  const pathToDB = join(dirname(__dirname), 'data.json');
+  const pathToDB = getDBPath();
   const data = await fs.readFile(pathToDB, 'utf-8');
 
   return JSON.parse(data) as IUser[];
