@@ -16,19 +16,19 @@ To run this application you have to do the following steps:
 
 1. Clone this repository
 
-   git clone https://github.com/andrewkarev/CRUD-API
+         git clone https://github.com/andrewkarev/CRUD-API
 
 2. Move to the cloned repo
 
-   cd CRUD-API
+         cd CRUD-API
 
 3. Switch branch to the `develop`
 
-   git checkout develop
+         git checkout develop
 
 4. Install dependencies
 
-   npm install
+         npm install
 
 ## Commands
 
@@ -44,9 +44,9 @@ To start the application with load balancer and shared in-memory database
 
     npm run start:multi
 
-To run test
+To run tests
 
-    npm run tests
+    npm run test
 
 ## How to use
 
