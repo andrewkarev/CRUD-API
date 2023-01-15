@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "jest",
-    "start:prod": "ts-node ./dist/index.js",
+    "start:prod": "ts-node ./src/index.ts",
     "start:dev": "nodemon ./src/index.ts",
     "start:multi": "nodemon ./src/balancer.ts"
   },
